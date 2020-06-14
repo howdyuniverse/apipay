@@ -15,7 +15,7 @@ async def handler_root(request: web.Request) -> web.Response:
     return web.Response(text=f'Hello', content_type='text/html')
 
 
-# curl -D - -d '{"login":"howdy", "password":"world"}' -H "Content-Type: application/json" -X POST http://localhost:8000/register
+# curl -D - -d '{"login":"alice", "password":"alice"}' -H "Content-Type: application/json" -X POST http://localhost:8000/register
 async def handle_register(request: web.Request) -> web.Response:
     post_data = await request.json()
     login = post_data.get('login')
@@ -28,7 +28,7 @@ async def handle_register(request: web.Request) -> web.Response:
     return web.json_response({'token': token})
 
 
-# curl -D - -d '{"login":"howdy", "password":"world"}' -H "Content-Type: application/json" -X POST http://localhost:8000/login
+# curl -D - -d '{"login":"alice", "password":"alice"}' -H "Content-Type: application/json" -X POST http://localhost:8000/login
 async def handle_login(request: web.Request) -> web.Response:
     post_data = await request.json()
     login = post_data.get('login')
