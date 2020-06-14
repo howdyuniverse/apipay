@@ -1,0 +1,31 @@
+version: '3.5'
+
+volumes:
+  tmpdata-volume:
+
+services:
+  database:
+    image: postgres
+    container_name: apipay_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: apipay
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+      - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    read_only: true
+    tty: true
+    volumes:
+      - .:/work
+    ports:
+      - 8000:8000
+    command: watchexec --restart --watch apipay --exts py -- python3.8 -m apipay
+
+volumes:
+  database-data:
